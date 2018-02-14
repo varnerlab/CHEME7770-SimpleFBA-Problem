@@ -1,0 +1,26 @@
+// ============================================================== //
+// Metabolic reactions -
+#pragma::metabolic_reaction_handler
+//
+// Record:
+// name (unique),reactants,products,reverse,forward
+//
+// Notes:
+// [] = system (not tracked)
+//
+// ============================================================= //
+
+// intracellular reactions -
+R1,A_c,B_c,-inf,inf
+R2,A_c,C_c,0,inf
+R3,C_c,B_c,0,inf
+
+// transport reactions -
+A_transport,A_x,A_c,0,inf
+B_transport,B_c,B_x,0,inf
+C_transport,C_c,C_x,0,inf
+
+// exchange reactions
+A_exchange,A_x,A_e,-inf,inf
+B_exchange,B_x,B_e,-inf,inf
+C_exchange,C_x,C_e,-inf,inf

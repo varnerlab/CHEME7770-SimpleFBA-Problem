@@ -1,0 +1,23 @@
+1 R1::A_c --> B_c
+2 R1_reverse::B_c --> A_c
+3 R2::A_c --> C_c
+4 R3::C_c --> B_c
+5 A_transport::A_x --> A_c
+6 B_transport::B_c --> B_x
+7 C_transport::C_c --> C_x
+8 A_exchange::A_x --> A_e
+9 A_exchange_reverse::A_e --> A_x
+10 B_exchange::B_x --> B_e
+11 B_exchange_reverse::B_e --> B_x
+12 C_exchange::C_x --> C_e
+13 C_exchange_reverse::C_e --> C_x
+
+1 A_c
+2 A_x
+3 B_c
+4 B_x
+5 C_c
+6 C_x
+7 A_e
+8 B_e
+9 C_e
