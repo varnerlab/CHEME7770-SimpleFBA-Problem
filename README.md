@@ -31,14 +31,16 @@ Extracellular A, B and C can be exchanged with hypothetical boundary metabolites
 You solve the flux balance analysis procedure by executing either the default driver function [Solve.jl](./src/Solve.jl) (or a custom driver routine that you have written).
 The default driver routine is given by:
 
+```
+include("Include.jl")
 
-  include("Include.jl")
+# load the data dictionary -
+data_dictionary = DataDictionary(0,0,0)
 
-  # load the data dictionary -
-  data_dictionary = DataDictionary(0,0,0)
+# solve the lp problem -
+(objective_value, flux_array, dual_array, uptake_array, exit_flag, status_flag) = FluxDriver(data_dictionary)
+```
 
-  # solve the lp problem -
-  (objective_value, flux_array, dual_array, uptake_array, exit_flag, status_flag) = FluxDriver(data_dictionary)
 
 The default routine loads the required files into the Julia session, then loads a [Julia dictionary](https://docs.julialang.org/en/release-0.5/stdlib/collections/?highlight=dict#Base.Dict) holding the parameters (species and flux bounds, and the objective coefficient vector) required by GLPK. The data dictionary is then passed to FluxDriver which sets up the flux balance analysis problem, calls the LP solver and returns
 the flux solution. The main point of customization is in data dictionary, see the [maximize_c_script.jl](./maximize_c_script.jl) for an example.
