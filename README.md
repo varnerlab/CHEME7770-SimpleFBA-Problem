@@ -1,4 +1,4 @@
-## Demonstration Flux Balance Analysis (FBA) problem
+## Simple Flux Balance Analysis (FBA) problem
 Flux balance analysis (along with a related approach called Metabolic Flux Analysis or MFA) is a widely used technique to estimate intracellular fluxes (reaction rates, typically in units of mmol/gDW-hr) given measurements of the specific uptake and secretion rates into/from a cell. Flux balance analysis is posed as a Linear Programming (LP) problem where the stoichiometric material balances, and bounds on the permissible values of the fluxes serve as constraints on the calculation.
 For more information on flux balance analysis see:
 
