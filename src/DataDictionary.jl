@@ -22,6 +22,52 @@
 # THE SOFTWARE.
 # ----------------------------------------------------------------------------------- #
 
+function maximize_b_and_c_with_v4_dictionary(time_start,time_stop,time_step)
+
+	# Load the default data dictionary -
+	data_dictionary = DataDictionary(time_start,time_stop,time_step)
+
+	# Modify the data dictionary -
+	# Update the objective coefficient array -
+	objective_coefficient_array = data_dictionary["objective_coefficient_array"]
+	objective_coefficient_array[10] = -1
+
+	# Update bounds -
+	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
+	default_flux_bounds_array[7,1] = 0.3  	# force C to be produced at 0.3 mmol/gDW-hr
+	default_flux_bounds_array[7,2] = 0.3 	# force C to be produced at 0.3 mmol/gDW-hr
+
+	default_flux_bounds_array[2,1] = 0.1	# some flux back to A from B
+	default_flux_bounds_array[2,2] = 0.1	# some flux back to A from B
+
+	default_flux_bounds_array[11,2] = 0.0
+	default_flux_bounds_array[13,2] = 0.0
+
+	# return -
+	return data_dictionary
+end
+
+function maximize_b_and_c_dictionary(time_start,time_stop,time_step)
+
+	# Load the default data dictionary -
+	data_dictionary = DataDictionary(time_start,time_stop,time_step)
+
+	# Modify the data dictionary -
+	# Update the objective coefficient array -
+	objective_coefficient_array = data_dictionary["objective_coefficient_array"]
+	objective_coefficient_array[10] = -1
+
+	# Update bounds -
+	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
+	default_flux_bounds_array[7,1] = 0.3  	# force C to be produced at 0.3 mmol/gDW-hr
+	default_flux_bounds_array[7,2] = 0.3 	# force C to be produced at 0.3 mmol/gDW-hr
+	default_flux_bounds_array[11,2] = 0.0
+	default_flux_bounds_array[13,2] = 0.0
+
+	# return -
+	return data_dictionary
+end
+
 function maximize_c_dictionary(time_start,time_stop,time_step)
 
 	# Load the default data dictionary -
@@ -30,7 +76,7 @@ function maximize_c_dictionary(time_start,time_stop,time_step)
 	# Modify the data dictionary -
 	# Update the objective coefficient array -
 	objective_coefficient_array = data_dictionary["objective_coefficient_array"]
-	objective_coefficient_array[12] = -1
+	objective_coefficient_array[12] = -1 # its negative because we min by default
 
 	# Update bounds -
 	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
@@ -104,6 +150,7 @@ function DataDictionary(time_start,time_stop,time_step)
 		0.0	;	# 7 C_transport::C_c --> C_x
 		0.0	;	# 8 A_exchange::A_x --> A_e
 		0.0	;	# 9 A_exchange_reverse::A_e --> A_x
+
 		0.0	;	# 10 B_exchange::B_x --> B_e
 		0.0	;	# 11 B_exchange_reverse::B_e --> B_x
 		0.0	;	# 12 C_exchange::C_x --> C_e

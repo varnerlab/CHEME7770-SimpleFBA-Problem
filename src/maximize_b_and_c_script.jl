@@ -1,11 +1,11 @@
-# Script to maximize the production of metabolite C_e
+# Script to maximize the production of metabolite B_e when C_e is being produced 
 # Based upon the generated solve script -
 
 # Include -
 include("Include.jl")
 
 # load up specific version of the data dictionary -
-data_dictionary = maximize_c_dictionary(0.0,0.0,0.0)
+data_dictionary = maximize_b_and_c_dictionary(0.0,0.0,0.0)
 
 # solve the lp problem -
 # ------------------------------------------------------------------------------------------------------------- #

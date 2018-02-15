@@ -134,9 +134,9 @@ GLPK.load_matrix(lp_problem, number_of_species*number_of_fluxes, row_index_array
 
 # Set solver parameters
 solver_parameters = GLPK.SimplexParam();
-solver_parameters.msg_lev = GLPK.MSG_ERR;
+solver_parameters.msg_lev = GLPK.MSG_OFF;
 solver_parameters.presolve = GLPK.ON;
-GLPK.init_smcp(solver_parameters);
+# GLPK.init_smcp(solver_parameters);
 
 # Call the solver -
 exit_flag = GLPK.simplex(lp_problem, solver_parameters);
