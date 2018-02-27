@@ -33,11 +33,11 @@ function show_flux_profile_markdown(flux_array::Array{Float64,1},epsilon::Float6
     list_of_reaction_strings = data_dictionary["list_of_reaction_strings"]
 
     # add table header -
-    header_string = "index | reaction | flux (mmol/gDW-hr)\n"
+    header_string = "index | reaction | flux (mmol/gDW-hr)"
     push!(list_of_flux_records,header_string)
 
     # Add the line -
-    table_string = "--- | --- | ---\n"
+    table_string = "--- | --- | ---"
     push!(list_of_flux_records,table_string)
 
     # create a list of reactions?
@@ -46,7 +46,7 @@ function show_flux_profile_markdown(flux_array::Array{Float64,1},epsilon::Float6
     # key,value -
     key = list_of_reaction_strings[flux_index]
     value = flux_array[flux_index]
-    record = "$(flux_index) | $(key) | $(value)\n"
+    record = "$(flux_index) | $(key) | $(value)"
     push!(list_of_flux_records,record)
 
     end

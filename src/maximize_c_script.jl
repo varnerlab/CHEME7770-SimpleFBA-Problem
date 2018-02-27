@@ -20,4 +20,4 @@ data_dictionary = maximize_c_dictionary(0.0,0.0,0.0)
 (objective_value, flux_array, dual_array, uptake_array, exit_flag, status_flag) = FluxDriver(data_dictionary)
 
 # Print on the fluxes that are active
-show_flux_profile_markdown(flux_array,0.0001,data_dictionary)
+report_string = show_flux_profile_markdown(flux_array,0.0001,data_dictionary)

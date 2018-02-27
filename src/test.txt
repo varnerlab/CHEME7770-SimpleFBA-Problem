@@ -1,5 +1,3 @@
-### Generated files
-
 index | reaction | flux (mmol/gDW-hr)
 --- | --- | ---
 3 | R2::A_c --> C_c | 1.0
