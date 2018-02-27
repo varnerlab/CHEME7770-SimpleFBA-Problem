@@ -5,9 +5,7 @@
 include("Include.jl")
 
 # load up specific version of the data dictionary -
-data_dictionary = maximize_c_dictionary(0.0,0.0,0.0)
-
-
+data_dictionary = maximize_b_dictionary(0.0,0.0,0.0)
 
 # solve the lp problem -
 # ------------------------------------------------------------------------------------------------------------- #

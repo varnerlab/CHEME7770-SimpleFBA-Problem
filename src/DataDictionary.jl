@@ -86,6 +86,24 @@ function maximize_c_dictionary(time_start,time_stop,time_step)
 	return data_dictionary
 end
 
+function maximize_b_dictionary(time_start,time_stop,time_step)
+
+	# Load the default data dictionary -
+	data_dictionary = DataDictionary(time_start,time_stop,time_step)
+
+	# Modify the data dictionary -
+	# Update the objective coefficient array -
+	objective_coefficient_array = data_dictionary["objective_coefficient_array"]
+	objective_coefficient_array[10] = -1 # its negative because we min by default
+
+	# Update bounds -
+	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
+	default_flux_bounds_array[11,2] = 0.0
+
+	# return -
+	return data_dictionary
+end
+
 # ----------------------------------------------------------------------------------- #
 # Function: DataDictionary
 # Description: Holds simulation and model parameters as key => value pairs in a Julia Dict()
