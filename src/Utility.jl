@@ -21,6 +21,38 @@ function show_flux_profile(flux_array::Array{Float64,1},epsilon::Float64,data_di
   return list_of_flux_records
 end
 
+function show_flux_profile_markdown(flux_array::Array{Float64,1},epsilon::Float64,data_dictionary::Dict{AbstractString,Any})
+
+    # initialize -
+    list_of_flux_records = String[]
+
+    # what fluxes are > epsilon?
+    idx_cutoff = find(flux_array.>epsilon)
+
+    # what is the list of reaction strings?
+    list_of_reaction_strings = data_dictionary["list_of_reaction_strings"]
+
+    # add table header -
+    header_string = "index | reaction | flux\n"
+    push!(list_of_flux_records,header_string)
+
+    # Add the line -
+    table_string = "--- | --- | ---\n"
+
+    # create a list of reactions?
+    for flux_index in idx_cutoff
+
+    # key,value -
+    key = list_of_reaction_strings[flux_index]
+    value = flux_array[flux_index]
+    record = "$(flux_index) | $(key) | $(value)\n"
+    push!(list_of_flux_records,record)
+
+    end
+
+    return list_of_flux_records
+end
+
 function generate_atom_matrix(path_to_atom_file::AbstractString,data_dictionary::Dict{AbstractString,Any})
 
 
