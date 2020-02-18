@@ -1,24 +1,32 @@
 function show_flux_profile(flux_array::Array{Float64,1},epsilon::Float64,data_dictionary::Dict{AbstractString,Any})
 
+  # number of cols -
+  number_of_cols = 3
+  
   # what fluxes are > epsilon?
-  idx_cutoff = find(flux_array.>epsilon)
+  idx_cutoff = findall(x->x>epsilon,flux_array)
 
   # what is the list of reaction strings?
   list_of_reaction_strings = data_dictionary["list_of_reaction_strings"]
 
+  # initialize -
+  report_buffer = Array{String,2}(undef,length(idx_cutoff),3)
+  
   # create a list of reactions?
-  list_of_flux_records = String[]
-  for flux_index in idx_cutoff
+  for (index,flux_index) in enumerate(idx_cutoff)
 
     # key,value -
     key = list_of_reaction_strings[flux_index]
     value = flux_array[flux_index]
     record = "$(flux_index),$(key),$(value)"
-    push!(list_of_flux_records,record)
+    
+    report_buffer[index,1] = "$(flux_index)"
+    report_buffer[index,2] = "$(key)"
+    report_buffer[index,3] = "$(value)"
 
   end
 
-  return list_of_flux_records
+  return report_buffer
 end
 
 function show_flux_profile_markdown(flux_array::Array{Float64,1},epsilon::Float64,data_dictionary::Dict{AbstractString,Any})
@@ -27,7 +35,7 @@ function show_flux_profile_markdown(flux_array::Array{Float64,1},epsilon::Float6
     list_of_flux_records = String[]
 
     # what fluxes are > epsilon?
-    idx_cutoff = find(flux_array.>epsilon)
+    idx_cutoff = findall(x->x>epsilon,flux_array)
 
     # what is the list of reaction strings?
     list_of_reaction_strings = data_dictionary["list_of_reaction_strings"]

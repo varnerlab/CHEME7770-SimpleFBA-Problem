@@ -34,14 +34,16 @@ function maximize_b_and_c_with_v4_dictionary(time_start,time_stop,time_step)
 
 	# Update bounds -
 	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
-	default_flux_bounds_array[7,1] = 0.3  	# force C to be produced at 0.3 mmol/gDW-hr
-	default_flux_bounds_array[7,2] = 0.3 	# force C to be produced at 0.3 mmol/gDW-hr
-
-	default_flux_bounds_array[2,1] = 0.1	# some flux back to A from B
-	default_flux_bounds_array[2,2] = 0.1	# some flux back to A from B
+	default_flux_bounds_array[2,1] = 0.8	# some flux back to A from B
+	default_flux_bounds_array[2,2] = 1.2	# some flux back to A from B
 
 	default_flux_bounds_array[11,2] = 0.0
 	default_flux_bounds_array[13,2] = 0.0
+
+	# update species_bounds_array -
+	default_species_bounds_array = data_dictionary["species_bounds_array"]
+	default_species_bounds_array[7,1] = -10.0 	# max A uptake -
+	default_species_bounds_array[9,1] = 3.6 	# min C production -
 
 	# return -
 	return data_dictionary
@@ -59,10 +61,13 @@ function maximize_b_and_c_dictionary(time_start,time_stop,time_step)
 
 	# Update bounds -
 	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
-	default_flux_bounds_array[7,1] = 0.3  	# force C to be produced at 0.3 mmol/gDW-hr
-	default_flux_bounds_array[7,2] = 0.3 	# force C to be produced at 0.3 mmol/gDW-hr
 	default_flux_bounds_array[11,2] = 0.0
 	default_flux_bounds_array[13,2] = 0.0
+
+	# update species_bounds_array -
+	default_species_bounds_array = data_dictionary["species_bounds_array"]
+	default_species_bounds_array[7,1] = -10.0 	# max A uptake -
+	default_species_bounds_array[9,1] = 3.6 	# min C production -
 
 	# return -
 	return data_dictionary
@@ -100,6 +105,11 @@ function maximize_b_dictionary(time_start,time_stop,time_step)
 	default_flux_bounds_array = data_dictionary["default_flux_bounds_array"]
 	default_flux_bounds_array[11,2] = 0.0
 
+	# update species_bounds_array -
+	default_species_bounds_array = data_dictionary["species_bounds_array"]
+	default_species_bounds_array[7,1] = -10.0
+	
+
 	# return -
 	return data_dictionary
 end
@@ -120,7 +130,7 @@ end
 function DataDictionary(time_start,time_stop,time_step)
 
 	# Load the stoichiometric network from disk -
-	stoichiometric_matrix = readdlm("Network.dat");
+	stoichiometric_matrix = readdlm("$(pwd())/src/Network.dat");
 
 	# Setup default flux bounds array -
 	default_bounds_array = [
@@ -134,6 +144,7 @@ function DataDictionary(time_start,time_stop,time_step)
 		0	100.0	;	# 7 C_c --> C_x
 		0	100.0	;	# 8 A_x --> A_e
 		0	100.0	;	# 9 A_e --> A_x
+
 		0	100.0	;	# 10 B_x --> B_e
 		0	100.0	;	# 11 B_e --> B_x
 		0	100.0	;	# 12 C_x --> C_e
@@ -143,23 +154,23 @@ function DataDictionary(time_start,time_stop,time_step)
 	# Setup default species bounds array -
 	species_bounds_array = [
 
-		0.0	0.0	;	# 1 A_c
+		0.0	0.0	;	# 1 A
 		0.0	0.0	;	# 2 A_x
-		0.0	0.0	;	# 3 B_c
+		0.0	0.0	;	# 3 B
 		0.0	0.0	;	# 4 B_x
-		0.0	0.0	;	# 5 C_c
+		0.0	0.0	;	# 5 C
 		0.0	0.0	;	# 6 C_x
 
 		-1.0	0.0	;	# 7 A_e
-		-1.0	1.0	;	# 8 B_e
-		-1.0	1.0	;	# 9 C_e
+		0.0		Inf	;	# 8 B_e
+		0.0		Inf	;	# 9 C_e
 	];
 
 	# Setup the objective coefficient array -
 	objective_coefficient_array = [
 
 		0.0	;	# 1 R1::A_c --> B_c
-		0.0	;	# 2 R1_reverse::B_c --> A_c
+		0.0	;	# 2 R4::B_c --> A_c
 		0.0	;	# 3 R2::A_c --> C_c
 		0.0	;	# 4 R3::C_c --> B_c
 
@@ -180,13 +191,13 @@ function DataDictionary(time_start,time_stop,time_step)
 
 	# List of reation strings - used to write flux report
 	list_of_reaction_strings = [
-		"R1::A_c --> B_c"
-		"R1_reverse::B_c --> A_c"
-		"R2::A_c --> C_c"
-		"R3::C_c --> B_c"
-		"A_transport::A_x --> A_c"
-		"B_transport::B_c --> B_x"
-		"C_transport::C_c --> C_x"
+		"R1::A --> B"
+		"R4::B --> A"
+		"R2::A --> C"
+		"R3::C --> B"
+		"A_transport::A_x --> A"
+		"B_transport::B --> B_x"
+		"C_transport::C --> C_x"
 		"A_exchange::A_x --> A_e"
 		"A_exchange_reverse::A_e --> A_x"
 		"B_exchange::B_x --> B_e"
@@ -197,11 +208,11 @@ function DataDictionary(time_start,time_stop,time_step)
 
 	# List of metabolite strings - used to write flux report
 	list_of_metabolite_symbols = [
-		"A_c"
+		"A"
 		"A_x"
-		"B_c"
+		"B"
 		"B_x"
-		"C_c"
+		"C"
 		"C_x"
 		"A_e"
 		"B_e"
